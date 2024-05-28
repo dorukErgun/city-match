@@ -37,10 +37,16 @@ export default function Home() {
 
   const setupNewQuestion = (latestAnswer: City) => {
     const withoutLatest = CITIES.filter(city => city.plate_number !== latestAnswer.plate_number);
-    const newAnswer = withoutLatest[Math.floor(Math.random() * 80)];
+    const newAnswer = withoutLatest[Math.floor(Math.random() * withoutLatest.length)];
     const answerIndex = CITIES.findIndex(city => city.plate_number === newAnswer.plate_number);
-    const selectionWindow = withoutLatest.slice(answerIndex - 3, answerIndex + 3).sort(() => 0.5 - Math.random());
+    const selectionWindow = withoutLatest.slice(answerIndex - 3 <= 0 ? undefined : answerIndex, answerIndex + 3).sort(() => 0.5 - Math.random());
     const newOptions = [newAnswer, ...selectionWindow.slice(0, 3)];
+    console.log({
+      answerIndex,
+      newAnswer,
+      selectionWindow,
+      newOptions
+    })
     newOptions.sort(() => 0.5 - Math.random());
     setQuestion({
       answer: newAnswer,
