@@ -94,7 +94,7 @@ export default function Home() {
           </section>
       }
       <section className="flex justify-center">
-        <h1 className="text-3xl font-semibold p-4">
+        <h1 className="text-xl font-semibold p-4">
           {!lastChoice.gameStarted ? "Başlamak için seç" : lastChoice.wasTrue ? "✅" : "❌, cevap " + lastChoice.city.name + " olacaktı!'"}
         </h1>
       </section>
