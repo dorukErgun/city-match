@@ -39,8 +39,10 @@ export default function Home() {
     const withoutLatest = CITIES.filter(city => city.plate_number !== latestAnswer.plate_number);
     const newAnswer = withoutLatest[Math.floor(Math.random() * withoutLatest.length)];
     const answerIndex = CITIES.findIndex(city => city.plate_number === newAnswer.plate_number);
-    const selectionWindow = withoutLatest.slice(answerIndex - 3 <= 0 ? undefined : answerIndex, answerIndex + 3).sort(() => 0.5 - Math.random());
-    const newOptions = [newAnswer, ...selectionWindow.slice(0, 3)].sort(() => 0.5 - Math.random());
+    const lowerBound = answerIndex - 3 <= 0 ? undefined : answerIndex - 3;
+    const upperBound = answerIndex + 3;
+    const selectionWindow = withoutLatest.slice(lowerBound, upperBound).sort(() => 0.5 - Math.random()).slice(0, 3);
+    const newOptions = [newAnswer, ...selectionWindow].sort(() => 0.5 - Math.random());
     setQuestion({
       answer: newAnswer,
       options: newOptions
