@@ -11,6 +11,12 @@ type Question = {
   options: City[];
 }
 
+type LastChoice = {
+  wasTrue: boolean;
+  city: City;
+  gameStarted?: boolean;
+}
+
 export default function Home() {
   const [ loading, setLoading ] = useState(true);
   const [ question, setQuestion ] = useState<Question>({
@@ -18,7 +24,11 @@ export default function Home() {
     options: []
   });
   const [ combo, setCombo ] = useState(0);
-  const [ isLatestTrue, setIsLatestTrue ] = useState<boolean | undefined>();
+  const [ lastChoice, setLastChoice ] = useState<LastChoice>({
+    wasTrue: false,
+    city: CITIES[0],
+    gameStarted: false
+  });
 
   useEffect(() => {
     setupNewQuestion(CITIES[0]);
@@ -42,13 +52,9 @@ export default function Home() {
   }
 
   const onOptionSelect = (option: City) => {
-    if (option.plate_number === question.answer.plate_number) {
-      setCombo((combo) => combo + 1);
-      setIsLatestTrue(true);
-    } else {
-      setCombo(0);
-      setIsLatestTrue(false);
-    }
+    const didWin = option.plate_number === question.answer.plate_number;
+    setCombo((combo) => didWin ? combo + 1 : 0);
+    setLastChoice({ wasTrue: didWin, city: question.answer, gameStarted: true});
     setupNewQuestion(question.answer);
   }
 
@@ -89,7 +95,7 @@ export default function Home() {
       }
       <section className="flex justify-center">
         <h1 className="text-3xl font-semibold p-4">
-          {isLatestTrue === undefined ? "Başlamak için seç" : isLatestTrue ? "✅" : "❌"}
+          {!lastChoice.gameStarted ? "Başlamak için seç" : lastChoice.wasTrue ? "✅" : "❌, cevap " + lastChoice.city.name + " olacaktı!'"}
         </h1>
       </section>
     </main>
