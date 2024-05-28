@@ -36,19 +36,16 @@ export default function Home() {
   }, []);
 
   const setupNewQuestion = (latestAnswer: City) => {
-    const candidates = CITIES.filter(city => city.plate_number !== latestAnswer.plate_number);
-    const newAnswer = candidates[Math.floor(Math.random() * candidates.length)];
-    const newOptions = [newAnswer, ...pickRandom(candidates, 3)];
+    const withoutLatest = CITIES.filter(city => city.plate_number !== latestAnswer.plate_number);
+    const newAnswer = withoutLatest[Math.floor(Math.random() * 80)];
+    const answerIndex = CITIES.findIndex(city => city.plate_number === newAnswer.plate_number);
+    const selectionWindow = withoutLatest.slice(answerIndex - 3, answerIndex + 3).sort(() => 0.5 - Math.random());
+    const newOptions = [newAnswer, ...selectionWindow.slice(0, 3)];
     newOptions.sort(() => 0.5 - Math.random());
     setQuestion({
       answer: newAnswer,
       options: newOptions
     });
-  }
-
-  const pickRandom = (fromCandidates: City[], count: number): City[] => {
-    const shuffled = fromCandidates.sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
   }
 
   const onOptionSelect = (option: City) => {
