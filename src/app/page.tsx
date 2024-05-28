@@ -89,7 +89,7 @@ export default function Home() {
       }
       <section className="flex justify-center">
         <h1 className="text-3xl font-semibold p-4">
-          {isLatestTrue === undefined ? " " : isLatestTrue ? "✅" : "❌"}
+          {isLatestTrue === undefined ? "Başlamak için seç" : isLatestTrue ? "✅" : "❌"}
         </h1>
       </section>
     </main>
