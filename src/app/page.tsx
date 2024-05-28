@@ -53,7 +53,7 @@ export default function Home() {
   }
 
   return (
-    <main className="w-screen h-screen flex flex-col p-4">
+    <main className="w-screen h-[100svh] flex flex-col p-4">
       <section>
         <h1 className="text-3xl font-semibold p-4 text-right">
           {combo} Combo
@@ -89,7 +89,7 @@ export default function Home() {
       }
       <section className="flex justify-center">
         <h1 className="text-3xl font-semibold p-4">
-          {isLatestTrue === undefined ? "Soruyu Cevaplayarak Başla" : isLatestTrue ? "✅" : "❌"}
+          {isLatestTrue === undefined ? " " : isLatestTrue ? "✅" : "❌"}
         </h1>
       </section>
     </main>
