@@ -41,7 +41,7 @@ export default function Home() {
     const answerIndex = CITIES.findIndex(city => city.plate_number === newAnswer.plate_number);
     const lowerBound = answerIndex - 3 <= 0 ? undefined : answerIndex - 3;
     const upperBound = answerIndex + 3;
-    const selectionWindow = withoutLatest.slice(lowerBound, upperBound).sort(() => 0.5 - Math.random()).slice(0, 3);
+    const selectionWindow = withoutLatest.filter(city => city.plate_number !== newAnswer.plate_number).slice(lowerBound, upperBound).sort(() => 0.5 - Math.random()).slice(0, 3);
     const newOptions = [newAnswer, ...selectionWindow].sort(() => 0.5 - Math.random());
     setQuestion({
       answer: newAnswer,
